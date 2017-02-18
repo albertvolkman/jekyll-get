@@ -19,6 +19,15 @@ module Jekyll_Get
         begin
           target = site.data[d['data']]
           source = JSON.load(open(d['json']))
+
+          if d['meta']
+            meta = d['meta']
+
+            source['items'].each { |item|
+              item['meta'] = meta
+            }
+          end
+
           if target
             HashJoiner.deep_merge target, source
           else
